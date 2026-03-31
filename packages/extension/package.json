@@ -1,0 +1,13 @@
+{
+  "name": "@shadowctx/extension",
+  "version": "0.1.0",
+  "description": "ShadowCTX Chrome extension — Manifest V3, one-click save to local context store",
+  "private": true,
+  "scripts": {
+    "build": "node scripts/build-icons.js",
+    "pack": "node scripts/pack.js"
+  },
+  "devDependencies": {
+    "@types/chrome": "^0.0.324"
+  }
+}
