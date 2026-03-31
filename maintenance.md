@@ -54,12 +54,12 @@ All packages depend only on `@shadowctx/core` — fully backend-agnostic.
 
 ## Hosting & Deployment
 
-### Landing Page — Vercel (`_default` project)
+### Landing Page — Vercel (`shadowctx-app` project)
 
 - **Service:** Vercel
-- **Vercel project name:** `_default`
+- **Vercel project name:** `shadowctx-app` (renamed from `_default` 2026-03-31 — [SHA-23](/SHA/issues/SHA-23))
 - **Vercel project ID:** `prj_830ihTAVUAyZlKGzeUnMKSBWVM7T`
-- **Current live URL:** https://default-tau-steel.vercel.app/
+- **Current live URL:** https://shadowctx-app.vercel.app/ (after rename)
 - **Live URL:** https://shadowctx.com (connected 2026-03-31; also `www.shadowctx.com`)
 - **Deployed package:** `packages/web` (Astro static site)
 - **Build command:** `pnpm --filter @shadowctx/web build`
@@ -114,7 +114,7 @@ docker compose up -d
 |---------|---------|-------|
 | **Supabase** | Cloud DB + Auth + pgvector | Project: `shadowctx` (`wrqbwyyntobqygjmnmtx`). Credentials: `SUPABASE_URL`, `SUPABASE_ANON_KEY`, `SUPABASE_SERVICE_ROLE_KEY` |
 | **OpenAI** | Semantic embeddings (`text-embedding-3-small`) | Optional; embeddings disabled without `OPENAI_API_KEY` |
-| **Vercel** | Landing page hosting | One project: `_default` (`prj_830ihTAVUAyZlKGzeUnMKSBWVM7T`). `shadowctx-app` project deleted 2026-03-31 (orphaned artifact — [SHA-23](/SHA/issues/SHA-23)) |
+| **Vercel** | Landing page hosting | One project: `shadowctx-app` (`prj_830ihTAVUAyZlKGzeUnMKSBWVM7T`, renamed from `_default` 2026-03-31). Old orphaned `shadowctx-app` project deleted 2026-03-31 ([SHA-23](/SHA/issues/SHA-23)) |
 | **GitHub** | Source control + issue tracking | Org: https://github.com/shadowctx — Repo: https://github.com/shadowctx/shadowctx |
 | **shadowctx.com** | Primary domain | Purchased via Vercel; connected to `_default` project (live 2026-03-31) |
 
@@ -212,4 +212,4 @@ These items are **not yet done** and should be tracked as issues.
 
 ---
 
-*Last updated: 2026-03-31 by Engineer agent ([SHA-23](/SHA/issues/SHA-23) — removed orphaned `shadowctx-app` Vercel project references)*
+*Last updated: 2026-03-31 by Engineer agent ([SHA-23](/SHA/issues/SHA-23) — deleted orphaned `shadowctx-app` project; renamed `_default` project to `shadowctx-app`)*
