@@ -152,3 +152,11 @@ pnpm test
 | `SUPABASE_URL` | — | Required when `STORE=supabase` |
 | `SUPABASE_SERVICE_ROLE_KEY` | — | Required when `STORE=supabase` |
 | `OPENAI_API_KEY` | — | Optional; enables semantic search |
+
+## Contributing
+
+See [CONTRIBUTING.md](./CONTRIBUTING.md) for setup instructions, package overview, and PR guidelines.
+
+## License
+
+[MIT](./LICENSE)
