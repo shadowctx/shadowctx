@@ -1,4 +1,5 @@
 import { FastifyInstance, FastifyRequest, FastifyReply } from 'fastify'
+import { generateEmbedding, entryEmbeddingText } from '../lib/embeddings'
 
 // ── Types ──────────────────────────────────────────────────────────────────────
 
@@ -509,6 +510,19 @@ export async function workspaceRoutes(server: FastifyInstance) {
         await server.supabaseAdmin.from('entry_tags').insert(tagLinks)
       }
 
+      // Generate embedding asynchronously — don't block the response
+      generateEmbedding(entryEmbeddingText(title, body)).then((embedding) => {
+        if (embedding) {
+          server.supabaseAdmin
+            .from('entries')
+            .update({ embedding: JSON.stringify(embedding) })
+            .eq('id', entry.id)
+            .then(({ error: embErr }) => {
+              if (embErr) console.error('[entries] Failed to save embedding:', embErr.message)
+            })
+        }
+      })
+
       return reply.status(201).send({ entry })
     }
   )
@@ -562,7 +576,7 @@ export async function workspaceRoutes(server: FastifyInstance) {
       // Verify entry exists and user is author or admin
       const { data: entry } = await server.supabaseAdmin
         .from('entries')
-        .select('author_id')
+        .select('author_id, title, body')
         .eq('id', entryId)
         .eq('workspace_id', id)
         .single()
@@ -592,6 +606,23 @@ export async function workspaceRoutes(server: FastifyInstance) {
           .eq('id', entryId)
 
         if (error) return reply.status(400).send({ error: error.message })
+
+        // Regenerate embedding when title or body changes
+        if (updates.title !== undefined || updates.body !== undefined) {
+          const newTitle = (updates.title as string | undefined) ?? (entry as any).title ?? ''
+          const newBody = (updates.body as string | undefined) ?? (entry as any).body ?? ''
+          generateEmbedding(entryEmbeddingText(newTitle, newBody)).then((embedding) => {
+            if (embedding) {
+              server.supabaseAdmin
+                .from('entries')
+                .update({ embedding: JSON.stringify(embedding) })
+                .eq('id', entryId)
+                .then(({ error: embErr }) => {
+                  if (embErr) console.error('[entries] Failed to update embedding:', embErr.message)
+                })
+            }
+          })
+        }
       }
 
       // Update tags if provided
