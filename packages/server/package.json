@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@shadowctx/core": "workspace:*",
+    "@shadowctx/store-sqlite": "workspace:*",
     "@shadowctx/store-supabase": "workspace:*",
     "@supabase/supabase-js": "^2.49.4",
     "fastify": "^5.2.1",

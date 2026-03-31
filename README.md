@@ -1,133 +1,154 @@
 # ShadowCTX
 
-> Engineering context platform — capture the *why* behind decisions, incidents, and changes. Search it later.
+> Your AI has no memory of what you browse.
 
-**Production:** https://shadowctx-app.vercel.app
+ShadowCTX is a personal AI context tool that captures pages, notes, and decisions as you work — and lets you search them semantically later. It runs locally, stores everything in SQLite, and exposes a REST API that your AI assistants can query.
 
 ---
 
 ## Architecture
 
-| Layer | Technology |
-|-------|-----------|
-| Frontend | Next.js 16 (App Router), Tailwind CSS, deployed on Vercel |
-| Backend API | Fastify + TypeScript, Node.js |
-| Database | Supabase (PostgreSQL + pgvector) |
-| Auth | Supabase Auth (email+password, JWT) |
-| Semantic Search | OpenAI `text-embedding-3-small` + pgvector cosine similarity |
+```
+┌─────────────────┐   ┌──────────────────┐   ┌───────────────────┐
+│  Chrome          │   │  CLI (ctx)       │   │  MCP Server       │
+│  Extension       │   │  npm i -g        │   │  (Claude/Cursor)  │
+│  (packages/      │   │  shadowctx       │   │  packages/mcp     │
+│   extension)     │   │  packages/cli    │   │                   │
+└────────┬─────────┘   └────────┬─────────┘   └─────────┬─────────┘
+         │                      │                        │
+         └──────────────────────┼────────────────────────┘
+                                ▼
+              ┌─────────────────────────────────┐
+              │   REST API (packages/server)     │
+              │   Fastify · POST /pages          │
+              │              GET  /pages/search  │
+              └─────────────────┬───────────────┘
+                                │
+              ┌─────────────────┴───────────────┐
+              │  ContextStore interface          │
+              ├──────────────────────────────────┤
+              │  SqliteStore (self-hosted)        │
+              │  SupabaseStore (cloud/SaaS)       │
+              └──────────────────────────────────┘
+```
+
+| Package | Description |
+|---|---|
+| `packages/core` | `ContextStore` interface, types, embeddings, HTML extraction |
+| `packages/store-sqlite` | SQLite backend with JS cosine similarity |
+| `packages/store-supabase` | Supabase + pgvector backend |
+| `packages/server` | Fastify REST API server |
+| `packages/cli` | `ctx` CLI — `ctx save <url>`, `ctx search <query>` |
+| `packages/mcp` | MCP server for AI assistants (Claude, Cursor) |
+| `packages/extension` | Chrome Extension (Manifest V3) |
 
 ---
 
-## Repo Structure
+## Quick Start
 
-```
-shadowctx-api/          ← Fastify backend (this root)
-  src/
-    plugins/            ← Supabase client + JWT auth middleware
-    routes/             ← auth, workspaces, entries, tags, members, search
-    lib/                ← OpenAI embeddings helper
-  supabase/migrations/  ← Applied DB migrations
-  frontend/             ← Next.js 16 frontend
-    app/
-      (auth)/           ← signin, signup pages
-      (app)/            ← authenticated app: dashboard, entries, search, settings
-    lib/                ← Supabase SSR clients, API client, workspace context
-```
-
----
-
-## Local Setup
-
-### Backend API
+### Self-hosted (Docker — recommended)
 
 ```bash
-# 1. Install deps
-npm install
-
-# 2. Copy env and fill in secrets
-cp .env.example .env
-
-# 3. Run dev server (port 3000)
-npm run dev
+docker compose up
 ```
 
-**Required env vars (`.env`):**
-```
-SUPABASE_URL=https://wrqbwyyntobqygjmnmtx.supabase.co
-SUPABASE_ANON_KEY=<anon key from Supabase dashboard>
-SUPABASE_SERVICE_ROLE_KEY=<service role key from Supabase dashboard>
-OPENAI_API_KEY=<your OpenAI API key>
-```
+That's it. The API is available at `http://localhost:3000`.
 
-### Frontend
+Pages are stored in `./data/shadowctx.db` (mounted into the container).
+
+### CLI
 
 ```bash
-cd frontend
-npm install
-cp .env.example .env.local
-# Fill in .env.local, then:
-npm run dev   # http://localhost:3001
+npm install -g shadowctx
+
+# Save a page (fetches + extracts content automatically)
+ctx save https://example.com/article --tag ai --note "good reference"
+
+# Search saved pages
+ctx search "transformer architecture"
 ```
 
-**Required env vars (`frontend/.env.local`):**
+Set `SHADOWCTX_API_URL` (default `http://localhost:3000`) and optionally `OPENAI_API_KEY` for semantic search.
+
+### MCP (AI Assistants)
+
+Add to your Claude / Cursor config:
+
+```json
+{
+  "mcpServers": {
+    "shadowctx": {
+      "command": "npx",
+      "args": ["-y", "@shadowctx/mcp"],
+      "env": {
+        "SHADOWCTX_API_URL": "http://localhost:3000"
+      }
+    }
+  }
+}
 ```
-NEXT_PUBLIC_SUPABASE_URL=https://wrqbwyyntobqygjmnmtx.supabase.co
-NEXT_PUBLIC_SUPABASE_ANON_KEY=<anon key>
-NEXT_PUBLIC_API_URL=http://localhost:3000
-```
+
+### Chrome Extension
+
+1. Build: `cd packages/extension && pnpm build`
+2. Load `packages/extension/dist` as an unpacked extension in `chrome://extensions`
+3. Point it at `http://localhost:3000` in the extension popup
 
 ---
 
-## Supabase
-
-- **Project:** `wrqbwyyntobqygjmnmtx` (us-east-1, ACTIVE)
-- **Extensions:** `pgvector` enabled
-- **Schema:** `users`, `workspaces`, `workspace_members`, `entries` (embedding `vector(1536)`), `tags`, `entry_tags`
-- **RLS:** Full workspace isolation — users can only access data in workspaces they belong to
-- **Migrations:** `supabase/migrations/` — two applied migrations + search function
-
----
-
-## API Endpoints
+## API Reference
 
 | Method | Path | Description |
-|--------|------|-------------|
-| POST | `/auth/signup` | Create account |
-| POST | `/auth/signin` | Sign in, returns JWT |
-| POST | `/auth/signout` | Sign out |
-| GET | `/auth/me` | Current user |
-| GET | `/workspaces` | List user's workspaces |
-| POST | `/workspaces` | Create workspace |
-| GET | `/workspaces/:id` | Workspace detail |
-| PATCH | `/workspaces/:id` | Update workspace |
-| DELETE | `/workspaces/:id` | Delete workspace (owner only) |
-| GET | `/workspaces/:id/members` | List members |
-| POST | `/workspaces/:id/members` | Invite member by email |
-| DELETE | `/workspaces/:id/members/:userId` | Remove member |
-| GET | `/workspaces/:id/tags` | List tags |
-| POST | `/workspaces/:id/tags` | Create tag |
-| DELETE | `/workspaces/:id/tags/:tagId` | Delete tag |
-| GET | `/workspaces/:id/entries` | List entries (paginated, filterable by tag) |
-| POST | `/workspaces/:id/entries` | Create entry |
-| GET | `/workspaces/:id/entries/:id` | Entry detail |
-| PATCH | `/workspaces/:id/entries/:id` | Update entry |
-| DELETE | `/workspaces/:id/entries/:id` | Delete entry |
-| GET | `/workspaces/:id/search?q=` | Combined FTS + semantic search |
+|---|---|---|
+| `POST` | `/pages` | Save a page |
+| `GET` | `/pages` | List pages (`limit`, `offset`, `tag`, `source`) |
+| `GET` | `/pages/search?q=` | Semantic + keyword search |
+| `GET` | `/pages/tags` | All tags |
+| `GET` | `/pages/stats` | Total pages, date range |
+| `GET` | `/pages/:id` | Get a single page |
+| `DELETE` | `/pages/:id` | Delete a page |
+| `GET` | `/health` | Health check |
 
----
+**Save a page (POST /pages):**
 
-## Tests
-
-```bash
-npm test        # Run all backend tests (18 tests)
-npm run typecheck
+```json
+{
+  "url": "https://example.com",
+  "title": "Optional override",
+  "note": "Why I saved this",
+  "tags": ["ai", "research"],
+  "fetch": true
+}
 ```
 
+Set `"fetch": true` to have the server fetch and extract content from the URL automatically.
+
 ---
 
-## Deploy
+## Development
 
-**Frontend (Vercel):** Auto-deploys on push to `main` via Vercel CI. Set env vars in Vercel dashboard:
-- `NEXT_PUBLIC_SUPABASE_URL`
-- `NEXT_PUBLIC_SUPABASE_ANON_KEY`
-- `NEXT_PUBLIC_API_URL` — URL of your deployed Fastify API
+```bash
+# Install dependencies
+pnpm install
+
+# Build all packages
+pnpm build
+
+# Run the API server in dev mode (SQLite, no config needed)
+STORE=sqlite pnpm dev
+
+# Run all tests
+pnpm test
+```
+
+### Environment Variables (server)
+
+| Variable | Default | Description |
+|---|---|---|
+| `STORE` | `supabase` | Backend: `sqlite` or `supabase` |
+| `DB_PATH` | `./shadowctx.db` | SQLite file path (when `STORE=sqlite`) |
+| `PORT` | `3000` | Port to listen on |
+| `HOST` | `127.0.0.1` | Host to bind to |
+| `SUPABASE_URL` | — | Required when `STORE=supabase` |
+| `SUPABASE_SERVICE_ROLE_KEY` | — | Required when `STORE=supabase` |
+| `OPENAI_API_KEY` | — | Optional; enables semantic search |

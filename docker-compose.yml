@@ -1,0 +1,17 @@
+services:
+  shadowctx:
+    build:
+      context: .
+      dockerfile: packages/server/Dockerfile
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./data:/data
+    environment:
+      STORE: sqlite
+      DB_PATH: /data/shadowctx.db
+      PORT: "3000"
+      HOST: "0.0.0.0"
+      # Optional: set OPENAI_API_KEY to enable semantic search
+      # OPENAI_API_KEY: your-key-here
+    restart: unless-stopped
