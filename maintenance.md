@@ -29,7 +29,7 @@ It captures web pages, notes, and decisions (via Chrome extension or CLI), store
 - **License:** MIT
 - **GitHub org:** https://github.com/shadowctx
 - **GitHub repo:** https://github.com/shadowctx/shadowctx (live — pushed 2026-03-31)
-- **Landing page:** https://shadowctx.com (domain owned via Vercel, not yet connected — see [Pending Engineering Tasks](#pending-engineering-tasks))
+- **Landing page:** https://shadowctx.com (live — domain connected to `_default` Vercel project 2026-03-31)
 
 ---
 
@@ -60,7 +60,7 @@ All packages depend only on `@shadowctx/core` — fully backend-agnostic.
 - **Vercel project name:** `_default`
 - **Vercel project ID:** `prj_830ihTAVUAyZlKGzeUnMKSBWVM7T`
 - **Current live URL:** https://default-tau-steel.vercel.app/
-- **Intended URL:** https://shadowctx.com (not yet connected — see [Pending Engineering Tasks](#pending-engineering-tasks))
+- **Live URL:** https://shadowctx.com (connected 2026-03-31; also `www.shadowctx.com`)
 - **Deployed package:** `packages/web` (Astro static site)
 - **Build command:** `pnpm --filter @shadowctx/web build`
 - **Output directory:** `packages/web/dist`
@@ -125,7 +125,7 @@ docker compose up -d
 | **OpenAI** | Semantic embeddings (`text-embedding-3-small`) | Optional; embeddings disabled without `OPENAI_API_KEY` |
 | **Vercel** | Landing page + web app hosting | Two projects: `_default` (`prj_830ihTAVUAyZlKGzeUnMKSBWVM7T`) and `shadowctx-app` (`prj_nh2GgJzaWWj2pTQ79VB33QQxyyZn`) |
 | **GitHub** | Source control + issue tracking | Org: https://github.com/shadowctx — Repo: https://github.com/shadowctx/shadowctx |
-| **shadowctx.com** | Primary domain | Purchased via Vercel; not yet pointed at a deployment |
+| **shadowctx.com** | Primary domain | Purchased via Vercel; connected to `_default` project (live 2026-03-31) |
 
 ---
 
@@ -133,7 +133,8 @@ docker compose up -d
 
 | Domain | Purpose | Where managed | Status |
 |--------|---------|---------------|--------|
-| `shadowctx.com` | Primary landing page | Purchased via Vercel (DNS managed there) | **Not connected** — needs to be pointed at `_default` Vercel project |
+| `shadowctx.com` | Primary landing page | Purchased via Vercel (DNS managed there) | **Live** — connected to `_default` Vercel project (2026-03-31) |
+| `www.shadowctx.com` | www redirect | Purchased via Vercel (DNS managed there) | **Live** — connected to `_default` Vercel project (2026-03-31) |
 
 ---
 
