@@ -1,0 +1,26 @@
+{
+  "name": "@shadowctx/server",
+  "version": "0.1.0",
+  "description": "ShadowCTX local API server — Fastify REST API for ContextStore",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsx watch src/index.ts",
+    "start": "node dist/index.js",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@shadowctx/core": "workspace:*",
+    "@shadowctx/store-supabase": "workspace:*",
+    "@supabase/supabase-js": "^2.49.4",
+    "fastify": "^5.2.1",
+    "fastify-plugin": "^5.0.1"
+  },
+  "devDependencies": {
+    "@types/node": "^22.13.14",
+    "tsx": "^4.19.3",
+    "typescript": "^5.8.2",
+    "vitest": "^4.1.2"
+  }
+}

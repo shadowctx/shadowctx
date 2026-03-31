@@ -1,0 +1,42 @@
+---
+description: Search the user's personal context store (ShadowCTX) for saved pages
+globs:
+alwaysApply: false
+---
+
+# ShadowCTX Personal Context
+
+When the user references saved content, bookmarks, or prior research, use the `ctx` CLI to search their personal context store.
+
+## Commands
+
+```bash
+# Semantic search (preferred)
+ctx search "<query>" --json --limit 5
+
+# List recent saves
+ctx list --limit 10 --json
+
+# Get full content
+ctx get <id> --json
+
+# Save a new page
+ctx save <url> --tag <tag> --note "<note>"
+```
+
+## When to use
+
+- User says "I saved", "I bookmarked", "check my context"
+- Looking for information the user may have previously researched
+- Any question where saved pages might provide useful grounding
+
+## Setup requirements
+
+Set in shell profile:
+```
+SUPABASE_URL=...
+SUPABASE_SERVICE_ROLE_KEY=...
+OPENAI_API_KEY=...   # enables semantic search
+```
+
+Install: `npm install -g shadowctx`

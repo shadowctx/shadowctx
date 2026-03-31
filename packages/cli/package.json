@@ -1,0 +1,23 @@
+{
+  "name": "shadowctx",
+  "version": "0.1.0",
+  "description": "ctx — ShadowCTX CLI for saving and searching personal context",
+  "main": "dist/index.js",
+  "bin": {
+    "ctx": "dist/index.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsx src/index.ts",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@shadowctx/core": "workspace:*",
+    "@shadowctx/store-supabase": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/node": "^22.13.14",
+    "tsx": "^4.19.3",
+    "typescript": "^5.8.2"
+  }
+}

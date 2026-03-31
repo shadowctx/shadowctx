@@ -1,0 +1,24 @@
+{
+  "name": "@shadowctx/mcp",
+  "version": "0.1.0",
+  "description": "ShadowCTX MCP server — exposes ContextStore as MCP tools/resources (stdio)",
+  "main": "dist/index.js",
+  "bin": {
+    "shadowctx-mcp": "dist/index.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsx src/index.ts",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.0.0",
+    "@shadowctx/core": "workspace:*",
+    "@shadowctx/store-supabase": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/node": "^22.13.14",
+    "tsx": "^4.19.3",
+    "typescript": "^5.8.2"
+  }
+}
