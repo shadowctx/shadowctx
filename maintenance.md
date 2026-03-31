@@ -68,15 +68,6 @@ All packages depend only on `@shadowctx/core` — fully backend-agnostic.
 - **GitHub integration:** Not connected yet
 - **Config file:** `vercel.json`
 
-### Web App — Vercel (`shadowctx-app` project)
-
-- **Service:** Vercel
-- **Vercel project name:** `shadowctx-app`
-- **Vercel project ID:** `prj_nh2GgZzaWWj2pTQ79VB33QQxyyZn`
-- **Current live URL:** https://shadowctx-app.vercel.app/
-- **Description:** Web app with CTA "Start capturing engineering context for your team."
-- **GitHub integration:** Not connected yet
-
 ### Server — Docker / Self-Hosted
 
 - **Dockerfile:** `packages/server/Dockerfile` (multi-stage, Node 20 slim + pnpm 9)
@@ -123,7 +114,7 @@ docker compose up -d
 |---------|---------|-------|
 | **Supabase** | Cloud DB + Auth + pgvector | Project: `shadowctx` (`wrqbwyyntobqygjmnmtx`). Credentials: `SUPABASE_URL`, `SUPABASE_ANON_KEY`, `SUPABASE_SERVICE_ROLE_KEY` |
 | **OpenAI** | Semantic embeddings (`text-embedding-3-small`) | Optional; embeddings disabled without `OPENAI_API_KEY` |
-| **Vercel** | Landing page + web app hosting | Two projects: `_default` (`prj_830ihTAVUAyZlKGzeUnMKSBWVM7T`) and `shadowctx-app` (`prj_nh2GgJzaWWj2pTQ79VB33QQxyyZn`) |
+| **Vercel** | Landing page hosting | One project: `_default` (`prj_830ihTAVUAyZlKGzeUnMKSBWVM7T`). `shadowctx-app` project deleted 2026-03-31 (orphaned artifact — [SHA-23](/SHA/issues/SHA-23)) |
 | **GitHub** | Source control + issue tracking | Org: https://github.com/shadowctx — Repo: https://github.com/shadowctx/shadowctx |
 | **shadowctx.com** | Primary domain | Purchased via Vercel; connected to `_default` project (live 2026-03-31) |
 
@@ -198,8 +189,7 @@ These items are **not yet done** and should be tracked as issues.
 | # | Task | Priority | Notes |
 |---|------|----------|-------|
 | 2 | Connect `shadowctx.com` to Vercel `_default` project | High | In Vercel dashboard, go to `_default` project → Settings → Domains → add `shadowctx.com`. DNS is already managed via Vercel so the records can be auto-configured. |
-| 3 | Connect GitHub repo to both Vercel projects | Medium | In each Vercel project settings, connect to the `shadowctx/shadowctx` GitHub repo. For `_default`: deploy from `packages/web`. For `shadowctx-app`: determine which package it deploys. |
-| 4 | Clarify `shadowctx-app` Vercel project | Medium | What package/code does this project build? It may be an older or separate app deployment. Align with current monorepo structure or remove if unused. |
+| 3 | Connect GitHub repo to Vercel `_default` project | Medium | In `_default` project settings, connect to `shadowctx/shadowctx` GitHub repo, deploy from `packages/web`. |
 | 5 | Set up GitHub Actions CI | Low | Add `.github/workflows/ci.yml` to run `pnpm build && pnpm test && pnpm typecheck` on every PR. |
 
 ---
@@ -222,4 +212,4 @@ These items are **not yet done** and should be tracked as issues.
 
 ---
 
-*Last updated: 2026-03-31 by Engineer agent (SHA-20 — pushed codebase to GitHub, updated repo references)*
+*Last updated: 2026-03-31 by Engineer agent ([SHA-23](/SHA/issues/SHA-23) — removed orphaned `shadowctx-app` Vercel project references)*
