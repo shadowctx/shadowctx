@@ -65,7 +65,7 @@ All packages depend only on `@shadowctx/core` — fully backend-agnostic.
 - **Build command:** `pnpm --filter @shadowctx/web build`
 - **Output directory:** `packages/web/dist`
 - **Install command:** `pnpm install --ignore-scripts`
-- **GitHub integration:** Not connected yet
+- **GitHub integration:** Connected — `shadowctx/shadowctx` linked 2026-03-31; auto-deploy on push to `main` is active ([SHA-22](/SHA/issues/SHA-22))
 - **Config file:** `vercel.json`
 
 ### Server — Docker / Self-Hosted
@@ -178,7 +178,7 @@ See `CONTRIBUTING.md` for full contributor guide.
 - **Trigger:** push or PR to `main`
 - **Steps:** checkout → pnpm 9 setup → Node 20 setup (with pnpm cache) → `pnpm install --frozen-lockfile` → `pnpm build` → `pnpm test` → `pnpm typecheck`
 - **Issue templates:** `.github/ISSUE_TEMPLATE/` (bug report, feature request)
-- **Vercel auto-deploy:** Will trigger on `main` branch pushes once GitHub integration is connected (tracked in [SHA-22](/SHA/issues/SHA-22))
+- **Vercel auto-deploy:** Active — triggers on `main` branch pushes; GitHub integration connected 2026-03-31 ([SHA-22](/SHA/issues/SHA-22))
 
 ---
 
@@ -189,7 +189,6 @@ These items are **not yet done** and should be tracked as issues.
 | # | Task | Priority | Notes |
 |---|------|----------|-------|
 | 2 | Connect `shadowctx.com` to Vercel `_default` project | High | In Vercel dashboard, go to `_default` project → Settings → Domains → add `shadowctx.com`. DNS is already managed via Vercel so the records can be auto-configured. |
-| 3 | Connect GitHub repo to Vercel `_default` project | Medium | In `_default` project settings, connect to `shadowctx/shadowctx` GitHub repo, deploy from `packages/web`. |
 | 5 | Set up GitHub Actions CI | Low | Add `.github/workflows/ci.yml` to run `pnpm build && pnpm test && pnpm typecheck` on every PR. |
 
 ---
@@ -212,4 +211,4 @@ These items are **not yet done** and should be tracked as issues.
 
 ---
 
-*Last updated: 2026-03-31 by Engineer agent ([SHA-23](/SHA/issues/SHA-23) — deleted orphaned `shadowctx-app` project; renamed `_default` project to `shadowctx-app`)*
+*Last updated: 2026-03-31 by Engineer agent ([SHA-22](/SHA/issues/SHA-22) — connected `shadowctx/shadowctx` GitHub repo to `shadowctx-app` Vercel project; auto-deploy on `main` now active)*
