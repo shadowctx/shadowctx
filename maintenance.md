@@ -183,9 +183,11 @@ See `CONTRIBUTING.md` for full contributor guide.
 
 ## CI/CD
 
-- **Platform:** GitHub Actions (`.github/workflows/` — workflows directory exists but no active pipeline yet)
+- **Platform:** GitHub Actions (`.github/workflows/ci.yml` — added 2026-03-31)
+- **Trigger:** push or PR to `main`
+- **Steps:** checkout → pnpm 9 setup → Node 20 setup (with pnpm cache) → `pnpm install --frozen-lockfile` → `pnpm build` → `pnpm test` → `pnpm typecheck`
 - **Issue templates:** `.github/ISSUE_TEMPLATE/` (bug report, feature request)
-- **Vercel auto-deploy:** Will trigger on `main` branch pushes once GitHub integration is connected
+- **Vercel auto-deploy:** Will trigger on `main` branch pushes once GitHub integration is connected (tracked in [SHA-22](/SHA/issues/SHA-22))
 
 ---
 
