@@ -1,5 +1,5 @@
 {
   "buildCommand": "pnpm --filter @shadowctx/web build",
   "outputDirectory": "packages/web/dist",
-  "installCommand": "pnpm install"
+  "installCommand": "pnpm install --ignore-scripts"
 }
