@@ -1,6 +1,6 @@
 {
   "name": "@shadowctx/cli",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "ctx — ShadowCTX CLI for saving and searching personal context",
   "main": "dist/index.js",
   "bin": {
@@ -10,16 +10,20 @@
     "dist"
   ],
   "scripts": {
-    "build": "tsc",
+    "build": "esbuild src/index.ts --bundle --platform=node --target=node18 --outfile=dist/index.js --external:@supabase/supabase-js --external:jsdom --external:@mozilla/readability",
     "dev": "tsx src/index.ts",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@shadowctx/core": "workspace:*",
-    "@shadowctx/store-supabase": "workspace:*"
+    "@mozilla/readability": "^0.5.0",
+    "@supabase/supabase-js": "^2.49.4",
+    "jsdom": "^26.1.0"
   },
   "devDependencies": {
+    "@shadowctx/core": "workspace:*",
+    "@shadowctx/store-supabase": "workspace:*",
     "@types/node": "^22.13.14",
+    "esbuild": "^0.25.0",
     "tsx": "^4.19.3",
     "typescript": "^5.8.2"
   }

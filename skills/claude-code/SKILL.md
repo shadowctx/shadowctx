@@ -23,7 +23,7 @@ ctx get <id> --json
 
 ## Setup
 
-1. Install: `npm install -g shadowctx`
+1. Install: `npm install -g @shadowctx/cli`
 2. Set env vars:
    ```
    export SUPABASE_URL=https://your-project.supabase.co

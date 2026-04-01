@@ -59,7 +59,7 @@ Pages are stored in `./data/shadowctx.db` (mounted into the container).
 ### CLI
 
 ```bash
-npm install -g shadowctx
+npm install -g @shadowctx/cli
 
 # Save a page (fetches + extracts content automatically)
 ctx save https://example.com/article --tag ai --note "good reference"
