@@ -17,9 +17,15 @@ importers:
       '@shadowctx/core':
         specifier: workspace:*
         version: link:../core
+      '@shadowctx/store-sqlite':
+        specifier: workspace:*
+        version: link:../store-sqlite
       '@shadowctx/store-supabase':
         specifier: workspace:*
         version: link:../store-supabase
+      '@supabase/supabase-js':
+        specifier: ^2.0.0
+        version: 2.101.0
     devDependencies:
       '@types/node':
         specifier: ^22.13.14

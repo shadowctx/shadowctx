@@ -3,6 +3,9 @@
   "version": "0.1.0",
   "description": "ctx — ShadowCTX CLI for saving and searching personal context",
   "main": "dist/index.js",
+  "files": [
+    "dist"
+  ],
   "bin": {
     "ctx": "dist/index.js"
   },
@@ -13,7 +16,9 @@
   },
   "dependencies": {
     "@shadowctx/core": "workspace:*",
-    "@shadowctx/store-supabase": "workspace:*"
+    "@shadowctx/store-sqlite": "workspace:*",
+    "@shadowctx/store-supabase": "workspace:*",
+    "@supabase/supabase-js": "^2.0.0"
   },
   "devDependencies": {
     "@types/node": "^22.13.14",

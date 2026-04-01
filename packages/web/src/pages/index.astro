@@ -270,9 +270,9 @@ const NPM_INSTALL = "npm install -g shadowctx";
       <section id="install" class="py-24 px-6 border-t border-white/5">
         <div class="mx-auto max-w-2xl text-center">
           <p class="text-xs font-semibold uppercase tracking-widest text-sky-500 mb-4">Get Started</p>
-          <h2 class="text-3xl font-bold text-white mb-8">Ready in one command.</h2>
+          <h2 class="text-3xl font-bold text-white mb-8">Ready in two commands.</h2>
 
-          <div class="rounded-xl border border-sky-500/20 bg-sky-500/5 p-6 mb-8">
+          <div class="rounded-xl border border-sky-500/20 bg-sky-500/5 p-6 mb-4">
             <div class="flex items-center justify-between gap-4">
               <code class="font-mono text-base text-sky-300">{NPM_INSTALL}</code>
               <button
@@ -282,6 +282,24 @@ const NPM_INSTALL = "npm install -g shadowctx";
               >
                 Copy
               </button>
+            </div>
+          </div>
+
+          <div class="rounded-xl border border-emerald-500/20 bg-emerald-500/5 p-6 mb-6">
+            <div class="flex items-center justify-between gap-4">
+              <code class="font-mono text-base text-emerald-300">ctx init</code>
+              <span class="text-xs text-slate-500">first-run setup</span>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8 text-left">
+            <div class="rounded-lg border border-white/10 bg-white/5 p-4">
+              <p class="text-sm font-semibold text-white mb-1">Local mode</p>
+              <p class="text-xs text-slate-400">Stores context in a SQLite database on your machine. No account needed — works fully offline.</p>
+            </div>
+            <div class="rounded-lg border border-white/10 bg-white/5 p-4">
+              <p class="text-sm font-semibold text-white mb-1">Cloud mode</p>
+              <p class="text-xs text-slate-400">Syncs to ShadowCTX hosted Supabase. Access your context from any device with an account.</p>
             </div>
           </div>
 
