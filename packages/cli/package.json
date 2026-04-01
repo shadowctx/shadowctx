@@ -1,5 +1,5 @@
 {
-  "name": "shadowctx",
+  "name": "@shadowctx/cli",
   "version": "0.1.0",
   "description": "ctx — ShadowCTX CLI for saving and searching personal context",
   "main": "dist/index.js",
