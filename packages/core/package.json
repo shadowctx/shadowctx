@@ -4,6 +4,12 @@
   "description": "ShadowCTX core — ContextStore interface, types, embeddings, content extraction",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
     "build": "tsc",
     "typecheck": "tsc --noEmit",

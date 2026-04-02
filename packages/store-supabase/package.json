@@ -4,6 +4,12 @@
   "description": "ShadowCTX SupabaseStore — ContextStore backed by Supabase + pgvector",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
     "build": "tsc",
     "typecheck": "tsc --noEmit"
