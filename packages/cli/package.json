@@ -3,24 +3,26 @@
   "version": "0.1.1",
   "description": "ctx — ShadowCTX CLI for saving and searching personal context",
   "main": "dist/index.js",
-  "bin": {
-    "ctx": "dist/index.js"
-  },
   "files": [
     "dist"
   ],
+  "bin": {
+    "ctx": "dist/index.js"
+  },
   "scripts": {
-    "build": "esbuild src/index.ts --bundle --platform=node --target=node18 --outfile=dist/index.js --external:@supabase/supabase-js --external:jsdom --external:@mozilla/readability",
+    "build": "esbuild src/index.ts --bundle --platform=node --target=node18 --outfile=dist/index.js --external:@supabase/supabase-js --external:jsdom --external:@mozilla/readability --external:better-sqlite3",
     "dev": "tsx src/index.ts",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "@mozilla/readability": "^0.5.0",
     "@supabase/supabase-js": "^2.49.4",
+    "better-sqlite3": "^9.0.0",
     "jsdom": "^26.1.0"
   },
   "devDependencies": {
     "@shadowctx/core": "workspace:*",
+    "@shadowctx/store-sqlite": "workspace:*",
     "@shadowctx/store-supabase": "workspace:*",
     "@types/node": "^22.13.14",
     "esbuild": "^0.25.0",
