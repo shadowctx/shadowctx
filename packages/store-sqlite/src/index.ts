@@ -1,4 +1,6 @@
 import Database from 'better-sqlite3'
+import { mkdirSync } from 'fs'
+import { dirname } from 'path'
 import { randomUUID } from 'crypto'
 import type {
   ContextStore,
@@ -55,7 +57,9 @@ export class SqliteStore implements ContextStore {
   private userId: string | undefined
 
   constructor(opts: SqliteStoreOptions = {}) {
-    this.db = new Database(opts.dbPath ?? './shadowctx.db')
+    const dbPath = opts.dbPath ?? './shadowctx.db'
+    mkdirSync(dirname(dbPath), { recursive: true })
+    this.db = new Database(dbPath)
     this.userId = opts.userId
     this.db.pragma('journal_mode = WAL')
     this.db.exec(CREATE_TABLE)
