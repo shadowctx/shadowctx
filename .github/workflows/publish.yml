@@ -26,8 +26,8 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Build CLI
-        run: pnpm --filter @shadowctx/cli build
+      - name: Build all packages
+        run: pnpm build
 
       - name: Publish to npm
         run: npm publish --access public
