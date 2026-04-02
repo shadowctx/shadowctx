@@ -1,7 +1,7 @@
 {
   "name": "shadowctx",
   "private": true,
-  "packageManager": "pnpm@9.0.0",
+  "packageManager": "pnpm@10.30.3",
   "scripts": {
     "build": "pnpm -r build",
     "dev": "pnpm --filter @shadowctx/server dev",
